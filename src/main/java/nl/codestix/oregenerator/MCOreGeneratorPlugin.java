@@ -66,9 +66,20 @@ public class MCOreGeneratorPlugin extends JavaPlugin implements Listener {
 
                 ConfigurationSection section = blocksConfig.getConfigurationSection(rootEntry.getKey());
                 for(Map.Entry<String, Object> entry : section.getValues(false).entrySet()) {
-                    Material mat = Material.valueOf(entry.getKey().toUpperCase());
-                    int chance = (int)entry.getValue();
-                    gen.chances.put(mat, chance);
+                    if (entry.getKey().equalsIgnoreCase("particle")) {
+                        gen.particle = Particle.valueOf((String)entry.getValue());
+                    }
+                    else if (entry.getKey().equalsIgnoreCase("particle-count")) {
+                        gen.particleCount = (Integer)entry.getValue();
+                    }
+                    else if (entry.getKey().equalsIgnoreCase("particle-speed")) {
+                        gen.particleSpeed = (Double)entry.getValue();
+                    }
+                    else {
+                        Material mat = Material.valueOf(entry.getKey().toUpperCase());
+                        int chance = (int)entry.getValue();
+                        gen.chances.put(mat, chance);
+                    }
                 }
             }
             catch(Exception ex) {
@@ -92,13 +103,15 @@ public class MCOreGeneratorPlugin extends JavaPlugin implements Listener {
             ConfigurationSection section = blocksConfig.getConfigurationSection(gen.getConfigSectionName());
             if (section == null)
                 section = blocksConfig.createSection(gen.getConfigSectionName());
+            section.set("particle", gen.particle.name());
+            section.set("particle-count", gen.particleCount);
+            section.set("particle-speed", gen.particleSpeed);
             for(Map.Entry<Material,Integer> chance : gen.chances.entrySet()) {
                 section.set(chance.getKey().name(), chance.getValue());
             }
         }
 
         saveBlocksConfig();
-        saveConfig();
     }
 
     private final BlockFace[] ALL_FACES = new BlockFace[]{
