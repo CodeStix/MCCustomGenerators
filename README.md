@@ -16,3 +16,11 @@ A bukkit plugin to create any variation of the default cobblestone generator!
 - `remove`: Remove the selected generator.
 - `info`: Show information about the selected generator.
 - `particle [name] [count] [speed]`: Set the particle that will spawn when a block is generated in the selected generator. Or show a list of available particles when no particle name is given.
+
+## Building
+
+Use maven to build this project:
+
+```
+mvn clean compile assembly:single
+```
