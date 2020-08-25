@@ -144,11 +144,11 @@ public class CobbleCommand implements CommandExecutor {
                 for(BlockGenerator g : plugin.gens) {
                     commandSender.sendMessage(g.toString());
                 }
-                commandSender.sendMessage("§8Select a generator with /cobble select <type1> <type2>");
+                commandSender.sendMessage("§8Select a generator with /cobble select <block1> <block2>");
             }
             else {
                 commandSender.sendMessage("§dYou don't have any custom generators.");
-                commandSender.sendMessage("§8Create/select a generator using /cobble select <type1> <type2>");
+                commandSender.sendMessage("§8Create/select a generator using /cobble select <block1> <block2>");
                 commandSender.sendMessage("§8Then, use /cobble to display more information on what you can do.");
             }
         }
@@ -158,8 +158,8 @@ public class CobbleCommand implements CommandExecutor {
             for(Map.Entry<Material,Integer> entry : gen.chances.entrySet()) {
                 commandSender.sendMessage(String.format("%s = %d / %d = %.4f", entry.getKey().name().toLowerCase(), entry.getValue(), sum, (float)entry.getValue() / sum));
             }
-            commandSender.sendMessage("§8Set a block chance using /cobble set <type> <chance>");
-            commandSender.sendMessage("§8Remove a generating block using /cobble unset <type>");
+            commandSender.sendMessage("§8Set a block chance using /cobble set <block> <chance>");
+            commandSender.sendMessage("§8Remove a generating block using /cobble unset <block>");
             commandSender.sendMessage("§8Set a particle using /cobble particle <name> [count] [speed]");
             commandSender.sendMessage("§8Deselect this generator using /cobble deselect");
             commandSender.sendMessage("§8Remove this generator using /cobble remove");
