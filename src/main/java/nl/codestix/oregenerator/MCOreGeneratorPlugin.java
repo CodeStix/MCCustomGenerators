@@ -1,10 +1,8 @@
 package nl.codestix.oregenerator;
 
-import com.destroystokyo.paper.ParticleBuilder;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -23,15 +21,15 @@ public class MCOreGeneratorPlugin extends JavaPlugin implements Listener {
 
     public ArrayList<BlockGenerator> gens = new ArrayList<>();
 
-    public FileConfiguration blocksConfig = new YamlConfiguration();
-    public File blocksConfigFile = new File(getDataFolder(), "blocks.yml");
+    public FileConfiguration generatorsConfig = new YamlConfiguration();
+    public File generatorsConfigFile = new File(getDataFolder(), "generators.yml");
 
-    public void saveBlocksConfig() {
+    public void saveGeneratorsConfig() {
         try {
-            blocksConfig.save(blocksConfigFile);
+            generatorsConfig.save(generatorsConfigFile);
         }
         catch(IOException ex) {
-            getLogger().severe("Could not save blocks.yml! " + ex);
+            getLogger().severe("Could not save generators.yml! " + ex);
         }
     }
 
@@ -41,16 +39,16 @@ public class MCOreGeneratorPlugin extends JavaPlugin implements Listener {
         getCommand("cobble").setExecutor(new CobbleCommand(this));
 
         try {
-            blocksConfig.load(blocksConfigFile);
+            generatorsConfig.load(generatorsConfigFile);
         }
         catch (FileNotFoundException e) {
-            getLogger().warning("blocks.yml not found");
+            getLogger().warning("generators.yml not found");
         }
         catch (InvalidConfigurationException | IOException ex) {
-            getLogger().severe("Could not load blocks.yml! " + ex);
+            getLogger().severe("Could not load generators.yml! " + ex);
         }
 
-        for(Map.Entry<String, Object> rootEntry : blocksConfig.getValues(false).entrySet()) {
+        for(Map.Entry<String, Object> rootEntry : generatorsConfig.getValues(false).entrySet()) {
             List<String> keySplit = Arrays.asList(rootEntry.getKey().split("&"));
             if (keySplit.size() != 2)
             {
@@ -64,7 +62,7 @@ public class MCOreGeneratorPlugin extends JavaPlugin implements Listener {
                 BlockGenerator gen = new BlockGenerator(mat1, mat2);
                 gens.add(gen);
 
-                ConfigurationSection section = blocksConfig.getConfigurationSection(rootEntry.getKey());
+                ConfigurationSection section = generatorsConfig.getConfigurationSection(rootEntry.getKey());
                 for(Map.Entry<String, Object> entry : section.getValues(false).entrySet()) {
                     if (entry.getKey().equalsIgnoreCase("particle")) {
                         gen.particle = Particle.valueOf((String)entry.getValue());
@@ -100,9 +98,9 @@ public class MCOreGeneratorPlugin extends JavaPlugin implements Listener {
     @Override
     public void onDisable() {
         for(BlockGenerator gen : gens) {
-            ConfigurationSection section = blocksConfig.getConfigurationSection(gen.getConfigSectionName());
+            ConfigurationSection section = generatorsConfig.getConfigurationSection(gen.getConfigSectionName());
             if (section == null)
-                section = blocksConfig.createSection(gen.getConfigSectionName());
+                section = generatorsConfig.createSection(gen.getConfigSectionName());
             section.set("particle", gen.particle.name());
             section.set("particle-count", gen.particleCount);
             section.set("particle-speed", gen.particleSpeed);
@@ -111,7 +109,7 @@ public class MCOreGeneratorPlugin extends JavaPlugin implements Listener {
             }
         }
 
-        saveBlocksConfig();
+        saveGeneratorsConfig();
     }
 
     private final BlockFace[] ALL_FACES = new BlockFace[]{
