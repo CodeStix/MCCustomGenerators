@@ -117,6 +117,14 @@ public class CobbleCommand implements CommandExecutor {
             }
             catch(Exception ex) {
                 commandSender.sendMessage("§cCould not set particle: " + ex);
+                StringBuilder builder = new StringBuilder();
+                Particle[] particles = Particle.values();
+                for(int i = 0; i < particles.length; i++) {
+                    if (i != 0)
+                        builder.append(", ");
+                    builder.append(particles[i].name());
+                }
+                commandSender.sendMessage("§8List of available particles: " + builder);
             }
         }
         else if ((strings.length == 1 && strings[0].equalsIgnoreCase("list"))
@@ -140,8 +148,9 @@ public class CobbleCommand implements CommandExecutor {
             for(Map.Entry<Material,Integer> entry : gen.chances.entrySet()) {
                 commandSender.sendMessage(String.format("%s = %d / %d = %.4f", entry.getKey().name().toLowerCase(), entry.getValue(), sum, (float)entry.getValue() / sum));
             }
-            commandSender.sendMessage("§8Set a generating block chance using /cobble set <type> <chance>");
+            commandSender.sendMessage("§8Set a block chance using /cobble set <type> <chance>");
             commandSender.sendMessage("§8Remove a generating block using /cobble unset <type>");
+            commandSender.sendMessage("§8Set a particle using /cobble particle <name> [count] [speed]");
             commandSender.sendMessage("§8Deselect this generator using /cobble deselect");
             commandSender.sendMessage("§8Remove this generator using /cobble remove");
         }
