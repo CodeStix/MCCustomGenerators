@@ -101,32 +101,31 @@ public class CobbleCommand implements CommandExecutor {
                 commandSender.sendMessage("§cCould not set chance: " + ex);
             }
         }
-        else if (strings.length == 0) {
-            if (gen == null) {
-                if (plugin.gens.size() > 0) {
-                    commandSender.sendMessage(String.format("§dList of %d generators:", plugin.gens.size()));
-                    for(BlockGenerator g : plugin.gens) {
-                        commandSender.sendMessage(g.toString());
-                    }
-                    commandSender.sendMessage("§8Select a generator with /cobble select <type1> <type2>");
+        else if ((strings.length == 1 && strings[0].equalsIgnoreCase("list"))
+            || (strings.length == 0 && gen == null)) {
+            if (plugin.gens.size() > 0) {
+                commandSender.sendMessage(String.format("§dList of %d generators:", plugin.gens.size()));
+                for(BlockGenerator g : plugin.gens) {
+                    commandSender.sendMessage(g.toString());
                 }
-                else {
-                    commandSender.sendMessage("§dYou don't have any custom generators.");
-                    commandSender.sendMessage("§8Create/select a generator using /cobble select <type1> <type2>");
-                    commandSender.sendMessage("§8Then, use /cobble to display more information on what you can do.");
-                }
+                commandSender.sendMessage("§8Select a generator with /cobble select <type1> <type2>");
             }
             else {
-                int sum = gen.getChancesSum();
-                commandSender.sendMessage(String.format("§dGenerator %s: (%d chances sum)", gen.toString(), sum));
-                for(Map.Entry<Material,Integer> entry : gen.chances.entrySet()) {
-                    commandSender.sendMessage(String.format("%s = %d / %d = %.4f", entry.getKey().name(), entry.getValue(), sum, (float)entry.getValue() / sum));
-                }
-                commandSender.sendMessage("§8Set a generating block chance using /cobble set <type> <chance>");
-                commandSender.sendMessage("§8Remove a generating block using /cobble unset <type>");
-                commandSender.sendMessage("§8Deselect this generator using /cobble deselect");
-                commandSender.sendMessage("§8Remove this generator using /cobble remove");
+                commandSender.sendMessage("§dYou don't have any custom generators.");
+                commandSender.sendMessage("§8Create/select a generator using /cobble select <type1> <type2>");
+                commandSender.sendMessage("§8Then, use /cobble to display more information on what you can do.");
             }
+        }
+        else if (strings.length == 0) {
+            int sum = gen.getChancesSum();
+            commandSender.sendMessage(String.format("§dGenerator %s: (%d chances sum)", gen.toString(), sum));
+            for(Map.Entry<Material,Integer> entry : gen.chances.entrySet()) {
+                commandSender.sendMessage(String.format("%s = %d / %d = %.4f", entry.getKey().name(), entry.getValue(), sum, (float)entry.getValue() / sum));
+            }
+            commandSender.sendMessage("§8Set a generating block chance using /cobble set <type> <chance>");
+            commandSender.sendMessage("§8Remove a generating block using /cobble unset <type>");
+            commandSender.sendMessage("§8Deselect this generator using /cobble deselect");
+            commandSender.sendMessage("§8Remove this generator using /cobble remove");
         }
         else {
             commandSender.sendMessage("§cUnknown subcommand. Usage: " + command.getUsage());
