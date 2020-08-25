@@ -1,6 +1,6 @@
 name: MCCustomGenerators
 description: Create any variation of the default cobblestone generator!
-version: 0.1
+version: 0.1.0
 api-version: 1.15
 main: nl.codestix.customgenerators.MCCustomGeneratorsPlugin
 author: codestix
@@ -8,4 +8,35 @@ commands:
   cobble:
     usage: /cobble [help | list | select <block1> <block2> | info | deselect | remove | set <block> <chance> | unset <block> | particle [name] [count] [speed]]
     description: Show a list of generators, select/deselect/remove a generator, show info about generator, set generation chances for a block, remove generation chances for a block, set a generation particle.
+    permission: customgenerators.command
 
+permissions:
+  customgenerators.*:
+    description: Permission to use all the subcommands.
+    default: false
+    children:
+      customgenerators.create: true
+      customgenerators.set: true
+      customgenerators.select: true
+      customgenerators.help: true
+      customgenerators.particle: true
+
+  customgenerators.create:
+    description: Permission to create/remove a custom generator.
+    default: op
+
+  customgenerators.set:
+    description: Permission to set/unset a block chance for a generator.
+    default: op
+
+  customgenerators.particle:
+    description: Permission to set the generation particle for a generator.
+    default: op
+
+  customgenerators.select:
+    description: Permission to select/deselect a generator, list them and show information about them.
+    default: true
+
+  customgenerators.command:
+    description: Permission to use the /cobble command.
+    default: true
