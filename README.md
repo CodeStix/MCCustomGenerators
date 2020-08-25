@@ -37,6 +37,15 @@ To create a generator that will generate sand and gravel when water hits sandsto
 
 __Done!__ Let water hit sandstone and sand and gravel will generate.
 
+## Permissions
+
+ - `customgenerators.*`: Permission to do everything.
+ - `customgenerators.command`: Permission to use the /cobble command. __(everyone has this permission by default)__ 
+ - `customgenerators.select`: Permission to select/deselect a generator, list them and show information about them. __(everyone has this permission by default)__ 
+ - `customgenerators.create`:  Permission to create/remove a custom generator. (only ops have this permission by default) 
+ - `customgenerators.set`: Permission to set/unset a block chance for a generator. (only ops have this permission by default) 
+ - `customgenerators.particle`: Permission to set the generation particle for a generator. (only ops have this permission by default) 
+
 ## Building
 
 Use maven to build this project:
