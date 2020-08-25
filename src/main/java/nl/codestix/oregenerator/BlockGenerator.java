@@ -17,6 +17,7 @@ public class BlockGenerator {
     public int particleCount = 5;
 
     public static final HashMap<Material, Integer> DEFAULT_LAVA_WATER_CHANCES = new HashMap<>();
+    public static final HashMap<Material, Integer> DEFAULT_LAVA_BLUE_ICE_CHANCES = new HashMap<>();
     public static final HashMap<Material, Integer> DEFAULT_OTHER_CHANCES = new HashMap<>();
 
     static {
@@ -29,6 +30,11 @@ public class BlockGenerator {
         DEFAULT_LAVA_WATER_CHANCES.put(Material.REDSTONE_ORE, 40);
         DEFAULT_LAVA_WATER_CHANCES.put(Material.IRON_ORE, 50);
         DEFAULT_LAVA_WATER_CHANCES.put(Material.COAL_ORE, 50);
+
+        DEFAULT_LAVA_BLUE_ICE_CHANCES.put(Material.BASALT, 100);
+        DEFAULT_LAVA_BLUE_ICE_CHANCES.put(Material.BLACKSTONE, 20);
+        DEFAULT_LAVA_BLUE_ICE_CHANCES.put(Material.SOUL_SAND, 8);
+        DEFAULT_LAVA_BLUE_ICE_CHANCES.put(Material.GRAVEL, 5);
 
         DEFAULT_OTHER_CHANCES.put(Material.STONE, 100);
     }

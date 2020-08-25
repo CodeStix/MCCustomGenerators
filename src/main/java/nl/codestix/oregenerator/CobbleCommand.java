@@ -44,6 +44,9 @@ public class CobbleCommand implements CommandExecutor {
                     if ((mat1 == Material.LAVA && mat2 == Material.WATER) || (mat2 == Material.LAVA && mat1 == Material.WATER)) {
                         defaultEntries = BlockGenerator.DEFAULT_LAVA_WATER_CHANCES;
                     }
+                    else if ((mat1 == Material.LAVA && mat2 == Material.BLUE_ICE) || (mat2 == Material.LAVA && mat1 == Material.BLUE_ICE)) {
+                        defaultEntries = BlockGenerator.DEFAULT_LAVA_BLUE_ICE_CHANCES;
+                    }
                     else {
                         defaultEntries = BlockGenerator.DEFAULT_OTHER_CHANCES;
                     }
