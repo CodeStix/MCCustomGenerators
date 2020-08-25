@@ -1,11 +1,11 @@
-name: MCOreGenerator
-description: Customize the cobblestone generator!
+name: MCCustomGenerators
+description: Create any variation of the default cobblestone generator!
 version: 0.1
 api-version: 1.15
-main: nl.codestix.oregenerator.MCOreGeneratorPlugin
-author: Stijn Rogiest
+main: nl.codestix.customgenerators.MCCustomGeneratorsPlugin
+author: codestix
 commands:
   cobble:
-    usage: /cobble [list | select <type1> <type2> | deselect | remove | set <type> <chance> | unset <type> | particle <name> [count] [speed]]
-    description: List chances or set chance.
+    usage: /cobble [list | select <block1> <block2> | deselect | remove | set <block> <chance> | unset <block> | particle <name> [count] [speed]]
+    description: Show a list of generators, select/deselect/remove a generator, set generation chances for a block, remove generation chances for a block, set a generation particle.
 

@@ -1,4 +1,4 @@
-package nl.codestix.oregenerator;
+package nl.codestix.customgenerators;
 
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -12,10 +12,10 @@ import java.util.Map;
 
 public class CobbleCommand implements CommandExecutor {
 
-    public MCOreGeneratorPlugin plugin;
+    public MCCustomGeneratorsPlugin plugin;
     private HashMap<String, BlockGenerator> selectedGenerators = new HashMap<>();
 
-    public CobbleCommand(MCOreGeneratorPlugin plugin) {
+    public CobbleCommand(MCCustomGeneratorsPlugin plugin) {
         this.plugin = plugin;
     }
 

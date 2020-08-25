@@ -1,4 +1,4 @@
-package nl.codestix.oregenerator;
+package nl.codestix.customgenerators;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

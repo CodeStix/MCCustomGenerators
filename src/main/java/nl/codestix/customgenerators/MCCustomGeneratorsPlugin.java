@@ -1,4 +1,4 @@
-package nl.codestix.oregenerator;
+package nl.codestix.customgenerators;
 
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -17,7 +17,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 
-public class MCOreGeneratorPlugin extends JavaPlugin implements Listener {
+public class MCCustomGeneratorsPlugin extends JavaPlugin implements Listener {
 
     public ArrayList<BlockGenerator> gens = new ArrayList<>();
 
