@@ -6,6 +6,6 @@ main: nl.codestix.oregenerator.MCOreGeneratorPlugin
 author: Stijn Rogiest
 commands:
   cobble:
-    usage: /cobble [select <type1> <type2> | unselect | set <type> <chance> | unset <type> | remove <type1> <type2>]
+    usage: /cobble [select <type1> <type2> | deselect | remove | set <type> <chance> | unset <type>]
     description: List chances or set chance.
 

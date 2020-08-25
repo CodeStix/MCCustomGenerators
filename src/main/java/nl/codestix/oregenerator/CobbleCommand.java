@@ -52,7 +52,7 @@ public class CobbleCommand implements CommandExecutor {
                 commandSender.sendMessage("§cCould not select generator: " + ex);
             }
         }
-        else if (strings.length == 1 && strings[0].equalsIgnoreCase("unselect")) {
+        else if (strings.length == 1 && strings[0].equalsIgnoreCase("deselect")) {
             selectedGenerators.remove(commandSender.getName());
             commandSender.sendMessage("§dDone, no generator selected.");
         }
@@ -111,11 +111,9 @@ public class CobbleCommand implements CommandExecutor {
                     commandSender.sendMessage("§8Select a generator with /cobble select <type1> <type2>");
                 }
                 else {
-                    commandSender.sendMessage("§dYou don't have any custom generators, create one using '/cobble select <type1> <type2>'. Example:");
-                    commandSender.sendMessage("/cobble select LAVA WATER");
-                    commandSender.sendMessage("/cobble set STONE 100");
-                    commandSender.sendMessage("/cobble set DIAMOND_ORE 20");
-                    commandSender.sendMessage("(when lava and water collide, the chance STONE will generate is 100/120, and the chance that DIAMOND_ORE will generate is 20/120)");
+                    commandSender.sendMessage("§dYou don't have any custom generators.");
+                    commandSender.sendMessage("§8Create/select a generator using /cobble select <type1> <type2>");
+                    commandSender.sendMessage("§8Then, use /cobble to display more information on what you can do.");
                 }
             }
             else {
@@ -124,9 +122,9 @@ public class CobbleCommand implements CommandExecutor {
                 for(Map.Entry<Material,Integer> entry : gen.chances.entrySet()) {
                     commandSender.sendMessage(String.format("%s = %d / %d = %.4f", entry.getKey().name(), entry.getValue(), sum, (float)entry.getValue() / sum));
                 }
-                commandSender.sendMessage("§8Set a block chance using /cobble set <type> <chance>");
+                commandSender.sendMessage("§8Set a generating block chance using /cobble set <type> <chance>");
                 commandSender.sendMessage("§8Remove a generating block using /cobble unset <type>");
-                commandSender.sendMessage("§8Deselect this generator using /cobble unselect");
+                commandSender.sendMessage("§8Deselect this generator using /cobble deselect");
                 commandSender.sendMessage("§8Remove this generator using /cobble remove");
             }
         }
