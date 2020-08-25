@@ -33,15 +33,16 @@ public class CobbleCommand implements CommandExecutor {
                     gen = new BlockGenerator(mat1, mat2);
                     plugin.gens.add(gen);
 
-                    ConfigurationSection section = plugin.getConfig().getConfigurationSection(gen.getConfigSectionName());
+                    ConfigurationSection section = plugin.blocksConfig.getConfigurationSection(gen.getConfigSectionName());
                     if (section == null)
-                        section = plugin.getConfig().createSection(gen.getConfigSectionName());
+                    {
+                        section = plugin.blocksConfig.createSection(gen.getConfigSectionName());
+                        plugin.saveBlocksConfig();
+                    }
                     for(Map.Entry<Material,Integer> entry : BlockGenerator.DEFAULT_CHANCES.entrySet()) {
                         section.set(entry.getKey().name(), entry.getValue());
                         gen.chances.put(entry.getKey(), entry.getValue());
                     }
-                    plugin.saveConfig();
-
                     commandSender.sendMessage("§dSelecting new generator " + gen.toString());
                 }
                 else {
@@ -64,8 +65,8 @@ public class CobbleCommand implements CommandExecutor {
             }
             commandSender.sendMessage("§dRemoving generator " + gen.toString());
             plugin.gens.remove(gen);
-            plugin.getConfig().set(gen.getConfigSectionName(), null);
-            plugin.saveConfig();
+            plugin.blocksConfig.set(gen.getConfigSectionName(), null);
+            plugin.saveBlocksConfig();
 
             selectedGenerators.remove(commandSender.getName());
         }
@@ -78,8 +79,8 @@ public class CobbleCommand implements CommandExecutor {
                 Material mat = Material.valueOf(strings[1].toUpperCase());
                 commandSender.sendMessage("§dRemoving " + mat);
                 gen.chances.remove(mat);
-                plugin.getConfig().getConfigurationSection(gen.getConfigSectionName()).set(mat.name(), null);
-                plugin.saveConfig();
+                plugin.blocksConfig.getConfigurationSection(gen.getConfigSectionName()).set(mat.name(), null);
+                plugin.saveBlocksConfig();
             }
             catch(Exception ex) {
                 commandSender.sendMessage("§cCould not remove chance: " + ex);
@@ -95,8 +96,8 @@ public class CobbleCommand implements CommandExecutor {
                 int i = Integer.parseInt(strings[2]);
                 commandSender.sendMessage(String.format("§dSetting chance for %s to %d", mat.name().toLowerCase(), i));
                 gen.chances.put(mat, i);
-                plugin.getConfig().getConfigurationSection(gen.getConfigSectionName()).set(mat.name(), i);
-                plugin.saveConfig();
+                plugin.blocksConfig.getConfigurationSection(gen.getConfigSectionName()).set(mat.name(), i);
+                plugin.saveBlocksConfig();
             }
             catch(Exception ex) {
                 commandSender.sendMessage("§cCould not set chance: " + ex);

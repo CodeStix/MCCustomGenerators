@@ -4,24 +4,53 @@ import com.destroystokyo.paper.ParticleBuilder;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 
 public class MCOreGeneratorPlugin extends JavaPlugin implements Listener {
 
     public ArrayList<BlockGenerator> gens = new ArrayList<>();
 
+    public FileConfiguration blocksConfig = new YamlConfiguration();
+    public File blocksConfigFile = new File(getDataFolder(), "blocks.yml");
+
+    public void saveBlocksConfig() {
+        try {
+            blocksConfig.save(blocksConfigFile);
+        }
+        catch(IOException ex) {
+            getLogger().severe("Could not save blocks.yml! " + ex);
+        }
+    }
+
     @Override
     public void onEnable() {
         Bukkit.getPluginManager().registerEvents(this, this);
         getCommand("cobble").setExecutor(new CobbleCommand(this));
 
-        for(Map.Entry<String, Object> rootEntry : getConfig().getValues(false).entrySet()) {
+        try {
+            blocksConfig.load(blocksConfigFile);
+        }
+        catch (FileNotFoundException e) {
+            getLogger().warning("blocks.yml not found");
+        }
+        catch (InvalidConfigurationException | IOException ex) {
+            getLogger().severe("Could not load blocks.yml! " + ex);
+        }
+
+        for(Map.Entry<String, Object> rootEntry : blocksConfig.getValues(false).entrySet()) {
             List<String> keySplit = Arrays.asList(rootEntry.getKey().split("&"));
             if (keySplit.size() != 2)
             {
@@ -35,7 +64,7 @@ public class MCOreGeneratorPlugin extends JavaPlugin implements Listener {
                 BlockGenerator gen = new BlockGenerator(mat1, mat2);
                 gens.add(gen);
 
-                ConfigurationSection section = getConfig().getConfigurationSection(rootEntry.getKey());
+                ConfigurationSection section = blocksConfig.getConfigurationSection(rootEntry.getKey());
                 for(Map.Entry<String, Object> entry : section.getValues(false).entrySet()) {
                     Material mat = Material.valueOf(entry.getKey().toUpperCase());
                     int chance = (int)entry.getValue();
@@ -60,14 +89,15 @@ public class MCOreGeneratorPlugin extends JavaPlugin implements Listener {
     @Override
     public void onDisable() {
         for(BlockGenerator gen : gens) {
-            ConfigurationSection section = getConfig().getConfigurationSection(gen.getConfigSectionName());
+            ConfigurationSection section = blocksConfig.getConfigurationSection(gen.getConfigSectionName());
             if (section == null)
-                section = getConfig().createSection(gen.getConfigSectionName());
+                section = blocksConfig.createSection(gen.getConfigSectionName());
             for(Map.Entry<Material,Integer> chance : gen.chances.entrySet()) {
                 section.set(chance.getKey().name(), chance.getValue());
             }
         }
 
+        saveBlocksConfig();
         saveConfig();
     }
 
