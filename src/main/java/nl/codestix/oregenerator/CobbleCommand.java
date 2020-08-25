@@ -56,24 +56,17 @@ public class CobbleCommand implements CommandExecutor {
             selectedGenerators.remove(commandSender.getName());
             commandSender.sendMessage("§dDone, no generator selected.");
         }
-        else if (strings.length == 3 && strings[0].equalsIgnoreCase("remove")) {
-            try {
-                Material mat1 = Material.valueOf(strings[1].toUpperCase());
-                Material mat2 = Material.valueOf(strings[2].toUpperCase());
-                gen = plugin.getGenerator(mat1, mat2);
-                if (gen == null) {
-                    commandSender.sendMessage("§cGenerator to remove not found!");
-                }
-                else {
-                    commandSender.sendMessage("§dRemoving generator " + gen.toString());
-                    plugin.gens.remove(gen);
-                    plugin.getConfig().set(gen.getConfigSectionName(), null);
-                    plugin.saveConfig();
-                }
+        else if (strings.length == 1 && strings[0].equalsIgnoreCase("remove")) {
+            if (gen == null) {
+                commandSender.sendMessage("§cSelect a generator first.");
+                return true;
             }
-            catch (Exception ex) {
-                commandSender.sendMessage("§cCould not remove generator: " + ex);
-            }
+            commandSender.sendMessage("§dRemoving generator " + gen.toString());
+            plugin.gens.remove(gen);
+            plugin.getConfig().set(gen.getConfigSectionName(), null);
+            plugin.saveConfig();
+
+            selectedGenerators.remove(commandSender.getName());
         }
         else if (strings.length == 2 && strings[0].equalsIgnoreCase("unset")) {
             if (gen == null) {
@@ -115,6 +108,7 @@ public class CobbleCommand implements CommandExecutor {
                     for(BlockGenerator g : plugin.gens) {
                         commandSender.sendMessage(g.toString());
                     }
+                    commandSender.sendMessage("§8Select a generator with /cobble select <type1> <type2>");
                 }
                 else {
                     commandSender.sendMessage("§dYou don't have any custom generators, create one using '/cobble select <type1> <type2>'. Example:");
@@ -130,6 +124,10 @@ public class CobbleCommand implements CommandExecutor {
                 for(Map.Entry<Material,Integer> entry : gen.chances.entrySet()) {
                     commandSender.sendMessage(String.format("%s = %d / %d = %.4f", entry.getKey().name(), entry.getValue(), sum, (float)entry.getValue() / sum));
                 }
+                commandSender.sendMessage("§8Set a block chance using /cobble set <type> <chance>");
+                commandSender.sendMessage("§8Remove a generating block using /cobble unset <type>");
+                commandSender.sendMessage("§8Deselect this generator using /cobble unselect");
+                commandSender.sendMessage("§8Remove this generator using /cobble remove");
             }
         }
         else {
