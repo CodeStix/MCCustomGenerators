@@ -92,7 +92,7 @@ public class CobbleCommand implements CommandExecutor {
             try {
                 Material mat = Material.valueOf(strings[1].toUpperCase());
                 int i = Integer.parseInt(strings[2]);
-                commandSender.sendMessage(String.format("§dSetting chance for %s to %d", mat.name(), i));
+                commandSender.sendMessage(String.format("§dSetting chance for %s to %d", mat.name().toLowerCase(), i));
                 gen.chances.put(mat, i);
                 plugin.getConfig().getConfigurationSection(gen.getConfigSectionName()).set(mat.name(), i);
                 plugin.saveConfig();
@@ -120,7 +120,7 @@ public class CobbleCommand implements CommandExecutor {
             int sum = gen.getChancesSum();
             commandSender.sendMessage(String.format("§dGenerator %s: (%d chances sum)", gen.toString(), sum));
             for(Map.Entry<Material,Integer> entry : gen.chances.entrySet()) {
-                commandSender.sendMessage(String.format("%s = %d / %d = %.4f", entry.getKey().name(), entry.getValue(), sum, (float)entry.getValue() / sum));
+                commandSender.sendMessage(String.format("%s = %d / %d = %.4f", entry.getKey().name().toLowerCase(), entry.getValue(), sum, (float)entry.getValue() / sum));
             }
             commandSender.sendMessage("§8Set a generating block chance using /cobble set <type> <chance>");
             commandSender.sendMessage("§8Remove a generating block using /cobble unset <type>");

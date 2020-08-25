@@ -60,6 +60,6 @@ public class BlockGenerator {
 
     @Override
     public String toString() {
-        return String.format("%s <-> %s (%d blocks)", mat1.name(), mat2.name(), chances.size());
+        return String.format("%s <-> %s (%d blocks)", mat1.name().toLowerCase(), mat2.name().toLowerCase(), chances.size());
     }
 }
