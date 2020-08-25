@@ -156,15 +156,15 @@ public class CobbleCommand implements CommandExecutor {
         }
         else if ((strings.length == 1 && strings[0].equalsIgnoreCase("help")) || strings.length == 0) {
             commandSender.sendMessage("§d§lCustom Generators Help");
-            commandSender.sendMessage("§6/cobble ...");
-            commandSender.sendMessage("   §6select <block1> <block2>§7: Select (or create) the generator that is activated by <block1> and <block2>. Either <block1> or <block2> must be a liquid.");
-            commandSender.sendMessage("   §6list§7: Show all the created generators.");
-            commandSender.sendMessage("   §6deselect§7: Deselect the selected generator.");
-            commandSender.sendMessage("   §6remove§7: Remove the selected generator.");
-            commandSender.sendMessage("   §6info§7: Show information about the selected generator.");
-            commandSender.sendMessage("   §6set <block> <chance>§7: Set the <chance> for the selected generator to generate <block>. The chance is calculated by (block chance / sum of all block chances).");
-            commandSender.sendMessage("   §6unset <block>§7: Do not generate <block> in the selected generator.");
-            commandSender.sendMessage("   §6particle [name] [count] [speed]§7: Set the particle that will spawn when a block is generated in the selected generator. Or show a list of particles if no particle name is given.");
+            commandSender.sendMessage("https://github.com/CodeStix/MCCustomGenerators#mccustomgenerators");
+            commandSender.sendMessage("§6/cobble select <block1> <block2>§7: Select (or create) the generator that is activated by <block1> and <block2>. Either <block1> or <block2> must be a liquid. For example: '/cobble select lava water' to select the default cobblestone generator.");
+            commandSender.sendMessage("§6/cobble list§7: Show all the created generators.");
+            commandSender.sendMessage("§6/cobble deselect§7: Deselect the selected generator.");
+            commandSender.sendMessage("§6/cobble remove§7: Remove the selected generator.");
+            commandSender.sendMessage("§6/cobble info§7: Show information about the selected generator.");
+            commandSender.sendMessage("§6/cobble set <block> <chance>§7: Set the <chance> for the selected generator to generate <block>. The chance is calculated by (chance / sum of all block chances). Chance can be any number. Higher values mean higher chance.");
+            commandSender.sendMessage("§6/cobble unset <block>§7: Do not generate <block> in the selected generator.");
+            commandSender.sendMessage("§6/cobble particle [name] [count] [speed]§7: Set the particle that will spawn when a block is generated in the selected generator. Or show a list of particles if no particle name is given.");
         }
         else {
             commandSender.sendMessage("§cInvalid subcommand! Use '/cobble help' to show available subcommands.");
