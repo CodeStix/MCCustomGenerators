@@ -22,14 +22,25 @@ public class CobbleCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
 
+        if (!commandSender.hasPermission("customgenerators.command"))
+            return false;
+
         BlockGenerator gen = selectedGenerators.get(commandSender.getName());
 
         if (strings.length == 3 && strings[0].equalsIgnoreCase("select")) {
+            if (!commandSender.hasPermission("customgenerators.select")) {
+                commandSender.sendMessage("§cYou do not have permission to select a generator.");
+                return true;
+            }
             try {
                 Material mat1 = Material.valueOf(strings[1].toUpperCase());
                 Material mat2 = Material.valueOf(strings[2].toUpperCase());
                 gen = plugin.getGenerator(mat1, mat2);
                 if (gen == null) {
+                    if (!commandSender.hasPermission("customgenerators.create")) {
+                        commandSender.sendMessage("§cYou do not have permission to select a new generator.");
+                        return true;
+                    }
                     gen = new BlockGenerator(mat1, mat2);
                     plugin.gens.add(gen);
 
@@ -64,10 +75,18 @@ public class CobbleCommand implements CommandExecutor {
             }
         }
         else if (strings.length == 1 && strings[0].equalsIgnoreCase("deselect")) {
+            if (!commandSender.hasPermission("customgenerators.select")) {
+                commandSender.sendMessage("§cYou don't have permission to deselect a generator.");
+                return true;
+            }
             selectedGenerators.remove(commandSender.getName());
             commandSender.sendMessage("§dDone, no generator selected.");
         }
         else if (strings.length == 1 && strings[0].equalsIgnoreCase("remove")) {
+            if (!commandSender.hasPermission("customgenerators.create")) {
+                commandSender.sendMessage("§cYou don't have permission to remove a generator.");
+                return true;
+            }
             if (gen == null) {
                 commandSender.sendMessage("§cSelect a generator first.");
                 return true;
@@ -80,6 +99,10 @@ public class CobbleCommand implements CommandExecutor {
             selectedGenerators.remove(commandSender.getName());
         }
         else if (strings.length == 2 && strings[0].equalsIgnoreCase("unset")) {
+            if (!commandSender.hasPermission("customgenerators.set")) {
+                commandSender.sendMessage("§cYou don't have permission to set block generation chances.");
+                return true;
+            }
             if (gen == null) {
                 commandSender.sendMessage("§cSelect a generator first.");
                 return true;
@@ -96,6 +119,10 @@ public class CobbleCommand implements CommandExecutor {
             }
         }
         else if (strings.length == 3 && strings[0].equalsIgnoreCase("set")) {
+            if (!commandSender.hasPermission("customgenerators.set")) {
+                commandSender.sendMessage("§cYou don't have permission to set block generation chances.");
+                return true;
+            }
             if (gen == null) {
                 commandSender.sendMessage("§cSelect a generator first.");
                 return true;
@@ -113,6 +140,10 @@ public class CobbleCommand implements CommandExecutor {
             }
         }
         else if (strings.length >= 1 && strings[0].equalsIgnoreCase("particle")) {
+            if (!commandSender.hasPermission("customgenerators.particle")) {
+                commandSender.sendMessage("§cYou don't have permission to set a particle.");
+                return true;
+            }
             if (strings.length == 1) {
                 Particle[] ps =  Particle.values();
                 commandSender.sendMessage("§dList of available particles:");
@@ -138,56 +169,52 @@ public class CobbleCommand implements CommandExecutor {
             }
         }
         else if (strings.length == 1 && strings[0].equalsIgnoreCase("list")) {
+            if (!commandSender.hasPermission("customgenerators.select")) {
+                commandSender.sendMessage("§cYou don't have permission to show the created generators.");
+                return true;
+            }
             commandSender.sendMessage(String.format("§dList of %d generators:", plugin.gens.size()));
             for(BlockGenerator g : plugin.gens) {
                 commandSender.sendMessage(g.toString());
             }
         }
         else if (strings.length == 1 && strings[0].equalsIgnoreCase("info")) {
+            if (!commandSender.hasPermission("customgenerators.select")) {
+                commandSender.sendMessage("§cYou don't have permission to show info about a generator.");
+                return true;
+            }
             if (gen == null) {
                 commandSender.sendMessage("§cSelect a generator first.");
                 return true;
             }
             int sum = gen.getChancesSum();
-            commandSender.sendMessage(String.format("§dGenerator %s: (%d chances sum)", gen.toString(), sum));
+            commandSender.sendMessage(String.format("§dGenerator %s: (%d sum)", gen.toString(), sum));
             for(Map.Entry<Material,Integer> entry : gen.chances.entrySet()) {
-                commandSender.sendMessage(String.format("%s = %d / %d = %.4f", entry.getKey().name().toLowerCase(), entry.getValue(), sum, (float)entry.getValue() / sum));
+                commandSender.sendMessage(String.format("§6%s §7= %d / %d = §6%.4f%%", entry.getKey().name().toLowerCase(), entry.getValue(), sum, (float)entry.getValue() / sum));
             }
         }
         else if ((strings.length == 1 && strings[0].equalsIgnoreCase("help")) || strings.length == 0) {
             commandSender.sendMessage("§d§lCustom Generators Help");
-            commandSender.sendMessage("https://github.com/CodeStix/MCCustomGenerators#mccustomgenerators");
-            commandSender.sendMessage("§6/cobble select <block1> <block2>§7: Select (or create) the generator that is activated by <block1> and <block2>. Either <block1> or <block2> must be a liquid. For example: '/cobble select lava water' to select the default cobblestone generator.");
-            commandSender.sendMessage("§6/cobble list§7: Show all the created generators.");
-            commandSender.sendMessage("§6/cobble deselect§7: Deselect the selected generator.");
-            commandSender.sendMessage("§6/cobble remove§7: Remove the selected generator.");
-            commandSender.sendMessage("§6/cobble info§7: Show information about the selected generator.");
-            commandSender.sendMessage("§6/cobble set <block> <chance>§7: Set the <chance> for the selected generator to generate <block>. The chance is calculated by (chance / sum of all block chances). Chance can be any number. Higher values mean higher chance.");
-            commandSender.sendMessage("§6/cobble unset <block>§7: Do not generate <block> in the selected generator.");
-            commandSender.sendMessage("§6/cobble particle [name] [count] [speed]§7: Set the particle that will spawn when a block is generated in the selected generator. Or show a list of particles if no particle name is given.");
+            commandSender.sendMessage("§8https://github.com/CodeStix/MCCustomGenerators#mccustomgenerators");
+            if (commandSender.hasPermission("customgenerators.select")) {
+                commandSender.sendMessage("§6/cobble select <block1> <block2>§7: Select (or create) the generator that is activated by <block1> and <block2>. Either <block1> or <block2> must be a liquid. For example: '/cobble select lava water' to select the default cobblestone generator.");
+                commandSender.sendMessage("§6/cobble deselect§7: Deselect the selected generator.");
+                commandSender.sendMessage("§6/cobble list§7: Show all the created generators.");
+                commandSender.sendMessage("§6/cobble info§7: Show information about the selected generator.");
+            }
+            if (commandSender.hasPermission("customgenerators.set")) {
+                commandSender.sendMessage("§6/cobble set <block> <chance>§7: Set the <chance> for the selected generator to generate <block>. The chance is calculated by (chance / sum of all block chances). Chance can be any number. Higher values mean higher chance.");
+                commandSender.sendMessage("§6/cobble unset <block>§7: Do not generate <block> in the selected generator.");
+            }
+            if (commandSender.hasPermission("customgenerators.create")) {
+                commandSender.sendMessage("§6/cobble remove§7: Remove the selected generator.");
+            }
+            if (commandSender.hasPermission("customgenerators.particle")) {
+                commandSender.sendMessage("§6/cobble particle [name] [count] [speed]§7: Set the particle that will spawn when a block is generated in the selected generator. Or show a list of particles if no particle name is given.");
+            }
         }
         else {
             commandSender.sendMessage("§cInvalid subcommand! Use '/cobble help' to show available subcommands.");
-
-            /*commandSender.sendMessage("§6§lHints");
-            if (gen == null) {
-                if (plugin.gens.size() > 0) {
-                    commandSender.sendMessage("§7Select a generator with /cobble select <block1> <block2>");
-                }
-                else {
-                    commandSender.sendMessage("§7Create a generator using /cobble select <block1> <block2>");
-                    commandSender.sendMessage("To customize the default cobblestone generator, use /cobble select lava water");
-                    commandSender.sendMessage("§7Show help using /cobble help");
-                }
-            }
-            else {
-                commandSender.sendMessage("§7Show info using /cobble info");
-                commandSender.sendMessage("Set a block chance using /cobble set <block> <chance>");
-                commandSender.sendMessage("§7Remove a generating block using /cobble unset <block>");
-                commandSender.sendMessage("Set a particle using /cobble particle <name> [count] [speed]");
-                commandSender.sendMessage("§7Deselect this generator using /cobble deselect");
-                commandSender.sendMessage("Remove this generator using /cobble remove");
-            }*/
         }
         return true;
     }
