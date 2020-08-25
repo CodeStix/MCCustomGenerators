@@ -1,0 +1,11 @@
+name: MCOreGenerator
+description: Customize the cobblestone generator!
+version: 0.1
+api-version: 1.15
+main: nl.codestix.oregenerator.MCOreGeneratorPlugin
+author: Stijn Rogiest
+commands:
+  cobble:
+    usage: /cobble [select <type1> <type2> | unselect | set <type> <chance> | unset <type> | remove <type1> <type2>]
+    description: List chances or set chance.
+
