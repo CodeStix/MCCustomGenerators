@@ -16,18 +16,21 @@ public class BlockGenerator {
     public double particleSpeed = 0.01d;
     public int particleCount = 5;
 
-    public static final HashMap<Material, Integer> DEFAULT_CHANCES = new HashMap<>();
+    public static final HashMap<Material, Integer> DEFAULT_LAVA_WATER_CHANCES = new HashMap<>();
+    public static final HashMap<Material, Integer> DEFAULT_OTHER_CHANCES = new HashMap<>();
 
     static {
-        DEFAULT_CHANCES.put(Material.STONE, 100);
-        DEFAULT_CHANCES.put(Material.DIRT, 40);
-        DEFAULT_CHANCES.put(Material.EMERALD_ORE, 10);
-        DEFAULT_CHANCES.put(Material.LAPIS_ORE, 25);
-        DEFAULT_CHANCES.put(Material.DIAMOND_ORE, 20);
-        DEFAULT_CHANCES.put(Material.GOLD_ORE, 30);
-        DEFAULT_CHANCES.put(Material.REDSTONE_ORE, 40);
-        DEFAULT_CHANCES.put(Material.IRON_ORE, 50);
-        DEFAULT_CHANCES.put(Material.COAL_ORE, 50);
+        DEFAULT_LAVA_WATER_CHANCES.put(Material.STONE, 100);
+        DEFAULT_LAVA_WATER_CHANCES.put(Material.DIRT, 40);
+        DEFAULT_LAVA_WATER_CHANCES.put(Material.EMERALD_ORE, 10);
+        DEFAULT_LAVA_WATER_CHANCES.put(Material.LAPIS_ORE, 25);
+        DEFAULT_LAVA_WATER_CHANCES.put(Material.DIAMOND_ORE, 20);
+        DEFAULT_LAVA_WATER_CHANCES.put(Material.GOLD_ORE, 30);
+        DEFAULT_LAVA_WATER_CHANCES.put(Material.REDSTONE_ORE, 40);
+        DEFAULT_LAVA_WATER_CHANCES.put(Material.IRON_ORE, 50);
+        DEFAULT_LAVA_WATER_CHANCES.put(Material.COAL_ORE, 50);
+
+        DEFAULT_OTHER_CHANCES.put(Material.STONE, 100);
     }
 
     public BlockGenerator(Material mat1, Material mat2) {

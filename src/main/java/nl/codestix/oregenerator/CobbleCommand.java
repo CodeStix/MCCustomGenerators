@@ -39,11 +39,20 @@ public class CobbleCommand implements CommandExecutor {
                         section = plugin.generatorsConfig.createSection(gen.getConfigSectionName());
                         plugin.saveGeneratorsConfig();
                     }
-                    for(Map.Entry<Material,Integer> entry : BlockGenerator.DEFAULT_CHANCES.entrySet()) {
+
+                    Map<Material,Integer> defaultEntries;
+                    if ((mat1 == Material.LAVA && mat2 == Material.WATER) || (mat2 == Material.LAVA && mat1 == Material.WATER)) {
+                        defaultEntries = BlockGenerator.DEFAULT_LAVA_WATER_CHANCES;
+                    }
+                    else {
+                        defaultEntries = BlockGenerator.DEFAULT_OTHER_CHANCES;
+                    }
+                    for(Map.Entry<Material,Integer> entry : defaultEntries.entrySet()) {
                         section.set(entry.getKey().name(), entry.getValue());
                         gen.chances.put(entry.getKey(), entry.getValue());
                     }
-                    commandSender.sendMessage("§dSelecting new generator " + gen.toString());
+
+                    commandSender.sendMessage("§dCreated and selected new generator " + gen.toString());
                 }
                 else {
                     commandSender.sendMessage("§dSelecting generator " + gen.toString());
