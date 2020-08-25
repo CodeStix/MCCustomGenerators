@@ -1,6 +1,6 @@
 name: MCCustomGenerators
 description: Create any variation of the default cobblestone generator!
-version: 0.1
+version: 0.1.0
 api-version: 1.15
 main: nl.codestix.customgenerators.MCCustomGeneratorsPlugin
 author: codestix
