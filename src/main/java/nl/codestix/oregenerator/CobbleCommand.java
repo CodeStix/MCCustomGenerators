@@ -1,6 +1,7 @@
 package nl.codestix.oregenerator;
 
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -99,6 +100,23 @@ public class CobbleCommand implements CommandExecutor {
             }
             catch(Exception ex) {
                 commandSender.sendMessage("§cCould not set chance: " + ex);
+            }
+        }
+        else if (strings.length >= 2 && strings[0].equalsIgnoreCase("particle")) {
+            if (gen == null) {
+                commandSender.sendMessage("§cSelect a generator first.");
+                return true;
+            }
+            try {
+                gen.particle = Particle.valueOf(strings[1].toUpperCase());
+                if (strings.length >= 3)
+                    gen.particleCount = Integer.parseInt(strings[2]);
+                if (strings.length >= 4)
+                    gen.particleSpeed = Double.parseDouble(strings[3]);
+                commandSender.sendMessage(String.format("§dGeneration particle for %s is set to %s (count = %d, speed = %f)", gen.toString(), gen.particle.name().toLowerCase(), gen.particleCount, gen.particleSpeed));
+            }
+            catch(Exception ex) {
+                commandSender.sendMessage("§cCould not set particle: " + ex);
             }
         }
         else if ((strings.length == 1 && strings[0].equalsIgnoreCase("list"))

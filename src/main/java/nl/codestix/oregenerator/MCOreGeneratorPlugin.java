@@ -1,5 +1,6 @@
 package nl.codestix.oregenerator;
 
+import com.destroystokyo.paper.ParticleBuilder;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -110,6 +111,6 @@ public class MCOreGeneratorPlugin extends JavaPlugin implements Listener {
         event.getToBlock().setType(genToUse.getRandomOre());
         Location loc = event.getToBlock().getLocation();
         loc.getWorld().playSound(loc, Sound.BLOCK_LAVA_EXTINGUISH, SoundCategory.AMBIENT, 1.0f, 0.9f);
-//        loc.getWorld().playEffect(loc, Effect.SMOKE, 1);
+        loc.getWorld().spawnParticle(genToUse.particle, loc.add(0.5d, 0.9d, 0.5d), genToUse.particleCount, 0.5d, 0.2d, 0.5d, genToUse.particleSpeed);
     }
 }

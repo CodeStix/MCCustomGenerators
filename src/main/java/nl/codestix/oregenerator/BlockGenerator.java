@@ -2,6 +2,7 @@ package nl.codestix.oregenerator;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,6 +12,9 @@ public class BlockGenerator {
     public Material mat1;
     public Material mat2;
     public HashMap<Material, Integer> chances = new HashMap<>();
+    public Particle particle = Particle.SMOKE_LARGE;
+    public double particleSpeed = 0.01d;
+    public int particleCount = 5;
 
     public static final HashMap<Material, Integer> DEFAULT_CHANCES = new HashMap<>();
 
