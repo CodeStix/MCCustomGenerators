@@ -20,7 +20,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>nl.codestix.mcdiscordregions.MCDiscordRegionsPlugin</mainClass>
+                            <mainClass>nl.codestix.oregenerator.MCOreGeneratorPlugin</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
