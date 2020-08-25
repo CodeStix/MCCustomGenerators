@@ -45,27 +45,6 @@ public class MCOreGeneratorPlugin extends JavaPlugin implements Listener {
                 getLogger().warning("Could not read config value: " + ex);
             }
         }
-
-        /*ConfigurationSection section = getConfig().getConfigurationSection("chances");
-        if (section != null) {
-            for(Map.Entry<String, Object> entry : section.getValues(false).entrySet()) {
-                Material mat = Material.valueOf(entry.getKey());
-                int chance = (int)entry.getValue();
-                chances.put(mat, chance);
-            }
-        }
-        else {
-            getLogger().info("Setting default chances");
-            chances.put(Material.STONE, 100);
-            chances.put(Material.DIRT, 40);
-            chances.put(Material.EMERALD_ORE, 10);
-            chances.put(Material.LAPIS_ORE, 25);
-            chances.put(Material.DIAMOND_ORE, 20);
-            chances.put(Material.GOLD_ORE, 30);
-            chances.put(Material.REDSTONE_ORE, 40);
-            chances.put(Material.IRON_ORE, 50);
-            chances.put(Material.COAL_ORE, 50);
-        }*/
     }
 
     public BlockGenerator getGenerator(Material mat1, Material mat2) {
@@ -76,14 +55,6 @@ public class MCOreGeneratorPlugin extends JavaPlugin implements Listener {
         }
         return null;
     }
-
-   /* public BlockGenerator getGenerator(String typeName) {
-        for(BlockGenerator gen : gens) {
-            if (gen.generatorTypeName().equalsIgnoreCase(typeName))
-                return gen;
-        }
-        return null;
-    }*/
 
     @Override
     public void onDisable() {
@@ -96,9 +67,6 @@ public class MCOreGeneratorPlugin extends JavaPlugin implements Listener {
             }
         }
 
-        /*for(Map.Entry<Material,Integer> entry : chances.entrySet()) {
-            getConfig().set(entry.getKey().name(), entry.getValue());
-        }*/
         saveConfig();
     }
 
