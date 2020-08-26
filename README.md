@@ -36,7 +36,7 @@ To create a generator that will generate sand and gravel when water hits sandsto
 - `/cobble select water sandstone`: will create/select a custom generator that activates when water hits sandstone. (order of water and sandstone does not matter)
 - `/cobble unset stone`: remove the default stone block, we don't want it to generate. (was automatically added when we created the generator in the first step)
 - `/cobble set gravel 10`: set the chance for gravel to generate to __10__. Gravel has a __100%__ chance of spawning right now.
-- `/cobble set sand 20`: set the chance for sand to generate to __30__.  Sand has a __75%__ chance of spawning, and gravel __25%__.
+- `/cobble set sand 30`: set the chance for sand to generate to __30__.  Sand has a __75%__ chance of spawning, and gravel __25%__.
 
 __Done!__ Let water hit sandstone and sand and gravel will generate.
 
