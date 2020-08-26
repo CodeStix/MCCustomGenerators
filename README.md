@@ -1,6 +1,9 @@
 # MCCustomGenerators
 A bukkit plugin to create any variation of the default cobblestone generator!
 
+![bukkit](https://img.shields.io/badge/-bukkit-orange?link=https://dev.bukkit.org/projects/custom-generators)
+![spigot](https://img.shields.io/badge/-spigot-yellow?link=https://www.spigotmc.org/resources/custom-generators.83158/)
+
 ## Installation
 1. Download the plugin [here](https://github.com/CodeStix/MCCustomGenerators/releases). (pick the right one for your server version)
 2. Place the downloaded jar file in your server's `plugins` folder.
